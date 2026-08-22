@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nikai.sportstv"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <!-- API 19 (Android 4.4.4) Support -->
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+    <!-- Network Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Device Feature Flags -->
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.television"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- IPTV Player Activity -->
+        <activity
+            android:name=".IptvPlayerActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/iptv_player" />
+
+        <!-- Cricket Match Details Activity -->
+        <activity
+            android:name=".CricketMatchActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/cricket_matches" />
+
+        <!-- Background Cricket Update Service -->
+        <service
+            android:name=".services.CricketUpdateService"
+            android:exported="false" />
+
+        <!-- Network State Receiver (restart service on network change) -->
+        <receiver
+            android:name=".receivers.NetworkStateReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
